@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include DefaultPageContent
 
   before_action :set_copyright
+  before_action :authenticate_user!
 
   def set_copyright
     @copyright = DempseyViewTool::Renderer.copyright 'Steven Dempsey', 'All rights reserved.'
