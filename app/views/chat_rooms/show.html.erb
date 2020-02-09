@@ -1,10 +1,12 @@
 <h1><%= @chat_room.title %></h1>
 
+<%= @chat_room.user.email %>
+
 <div id="messages">
   <%= render @chat_room.messages %>
 </div>
 
-<%= form_for @message, url: '#' do |f| %>
+<%= form_for @message do |f| %>
   <div class="form-group">
     <%= f.label :body %>
     <%= f.text_area :body, class: 'form-control' %>
@@ -13,3 +15,5 @@
 
   <%= f.submit "Post", class: 'btn btn-primary btn-lg' %>
 <% end %>
+
+<%= params %>
