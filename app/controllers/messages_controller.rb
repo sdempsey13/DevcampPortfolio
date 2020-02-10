@@ -1,17 +1,16 @@
 class MessagesController < ApplicationController
+  before_action :message_params, only: [:create]
 
   def index
     @message = Message.all
   end
 
   def create
-    @chat_room = ChatRoom.first
-    @message = current_user.messages.build(message_params)
-    @message.chat_room_id = @chat_room.id
+    message = Message.new(user_id: current_user.id, body: message_params[:body], chat_room_id: message_params[:chat_room_id])
 
-    if @message.save
+    if message.save
       flash[:success] = 'Chat room created!'
-      redirect_to chat_rooms_path
+      redirect_to chat_room_path(message_params[:chat_room_id])
     else
       redirect_to root_path
     end
@@ -20,7 +19,8 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:body)
+    params.require(:message).permit(:body, :chat_room_id)
+
   end
 
 end
